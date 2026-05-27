@@ -1,16 +1,155 @@
-# React + Vite
+# 🎟️ Event Management Platform
+An Event Management Platform built with React + Vite where users can browse events, book tickets, manage bookings, and switch between light/dark themes.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+#  Features
 
-Currently, two official plugins are available:
+## 📅 Events Listing & Discovery
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Display all events in card layout
+- Search events by title
+- Filter events by:
+  - Category
+  - Date
+  - Price Range
+- Sort events by:
+  - Date
+  - Price
+- Favorite/Like events
+- Responsive event grid
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 📖 Event Details Page
 
-## Expanding the ESLint configuration
+- Full event information
+- Event description
+- Organizer details
+- Venue & location
+- Ticket types with pricing
+- Book Tickets button
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## 🎫 Ticket Booking System
+
+### Multi-Step Booking Flow
+
+#### Step 1: Ticket Selection
+- Select ticket type
+- Select quantity
+- Real-time total calculation
+
+#### Step 2: Attendee Details
+- Name
+- Email
+- Phone
+- Form validation
+
+#### Step 3: Confirmation
+- Booking summary
+- Booking reference number
+- Success notification
+
+---
+
+## 📂 My Bookings
+
+- View all bookings
+- Upcoming/Past booking filters
+- Cancel upcoming bookings
+- Confirmation modal before cancellation
+
+---
+
+## 🌙 Theme Toggle
+
+- Light/Dark mode
+- Theme persistence using localStorage
+
+---
+
+# 🛠️ Tech Stack
+
+## Frontend
+- React
+- Vite
+- React Router DOM
+- Tailwind CSS
+- React Icons
+- React Toastify
+
+## Backend
+- JSON Server (Mock API)
+
+---
+# Folder Structure
+src/
+│
+├── components/
+├── pages/
+├── context/
+├── reducers/
+├── services/
+├── data/
+├── styles/
+└── App.jsx
+---
+# API Endpoints
+
+GET /events
+GET /events/:id
+GET /bookings?userId=user1
+POST /bookings
+PATCH /bookings/:id
+
+# Application Pages
+
+- /events
+- /events/:id
+- /booking/:id
+- /my-bookings
+
+---
+# Installation
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Run frontend:
+
+```bash
+npm run dev
+```
+
+Run backend:
+
+```bash
+npm run server
+```
+
+---
+
+# Packages Used
+
+```bash
+npm install react-router-dom
+npm install react-icons
+npm install react-toastify
+npm install json-server
+npm install tailwindcss @tailwindcss/vite
+```
+---
+# Future Improvements
+
+- User Authentication
+- Payment Gateway Integration
+- Seat Selection
+- Event Reviews & Ratings
+- Admin Dashboard
+- Email Notifications
+
+# Author
+Divya Patel
