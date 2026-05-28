@@ -1,14 +1,31 @@
-export default function EventsPage(){
+import { useEffect, useState } from "react";
+import EventCard from "../components/EventCard";
 
-    return (
 
-    <div className="p-8">
+export default function EventsPage() {
+  const [events, setEvents] = useState([]);
 
-      <h1 className="text-3xl font-bold">
-        Events Page
+  useEffect(() => {
+    fetch("http://localhost:3000/events")
+      .then((res) => res.json())
+      .then((data) => setEvents(data))
+      .catch((error) => console.error("Error fetching events:", error));
+  }, []);
+
+  return (
+    <div className="p-8 ">
+      <h1 className="text-4xl font-bold mb-8 text-center text-gray-800">
+        Upcoming Events
       </h1>
 
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+       {events.map((event) => (
+          <EventCard
+            key={event.id}
+            event={event}
+          />
+        ))}
+      </div>
     </div>
-
   );
 }

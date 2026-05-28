@@ -1,0 +1,92 @@
+
+{
+  "events": [
+    {
+      "id": 1,
+      "title": "React Conference",
+      "category": "Technology",
+      "date": "2026-06-20",
+      "location": "Toronto",
+      "venue": "Convention Center",
+      "price": 99,
+      "time": "09:00 AM",
+      "organizerName": "Tech Events Inc",
+      "image":"src/assets/image1.jpg",
+      "description": "Join developers and tech leaders for a full day of React workshops, networking, and modern web development sessions."
+    },
+
+    {
+      "id": 2,
+      "title": "Music Festival",
+      "category": "Music",
+      "date": "2026-07-10",
+      "location": "Vancouver",
+      "venue": "Music Hall",
+      "price": 50,
+      "time": "02:00 PM",
+      "organizerName": "Music Events Ltd",
+      "image": "src/assets/image2.jpg",
+      "description": "Experience live performances from top artists, exciting stage shows, food stalls, and an unforgettable musical atmosphere."
+    },
+
+    {
+      "id": 3,
+      "title": "Art Expo",
+      "category": "Arts",
+      "date": "2026-08-05",
+      "location": "Montreal",
+      "venue": "Art Gallery",
+      "price": 25,
+      "time": "10:00 AM",
+      "organizerName": "Art Enthusiasts Group",
+      "image": "src/assets/image3.jpg",
+      "description": "Explore creative artwork, modern paintings, sculptures, and interactive exhibits from talented artists around the world."
+    },
+
+    {
+      "id": 4,
+      "title": "Tech Meetup",
+      "category": "Technology",
+      "date": "2026-09-15",
+      "location": "Calgary",
+      "venue": "Tech Hub",
+      "price": 80,
+      "time": "06:00 PM",
+      "organizerName": "Tech Community Calgary",
+      "image": "src/assets/image4.jpg",
+      "description": "Meet developers, designers, and startup founders for inspiring tech talks, networking, and collaboration opportunities."
+    },
+
+    {
+      "id": 5,
+      "title": "Sports Tournament",
+      "category": "Sports",
+      "date": "2026-10-02",
+      "location": "Toronto",
+      "venue": "Sports Arena",
+      "price": 120,
+      "time": "04:00 PM",
+      "organizerName": "Sports Enthusiasts Group",
+      "image": "src/assets/image5.jpg",
+      "description": "Watch exciting matches, cheer for your favorite teams, and enjoy a thrilling sports competition experience."
+    },
+
+    {
+      "id": 6,
+      "title": "Music Festival",
+      "category": "Music",
+      "date": "2026-10-02",
+      "location": "Winnipeg",
+      "venue": "Music Hall",
+      "price": 150,
+      "time": "04:00 PM",
+      "organizerName": "Music Events Ltd",
+      "image": "src/assets/image6.jpg",
+      "description": "Experience live performances from top artists, exciting stage shows, food stalls, and an unforgettable musical atmosphere."
+    }
+    
+
+  ]
+
+}
+
