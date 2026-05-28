@@ -1,3 +1,14 @@
 export default function EventsPage(){
-return <h1>EventsPage</h1>
+
+    return (
+
+    <div className="p-8">
+
+      <h1 className="text-3xl font-bold">
+        Events Page
+      </h1>
+
+    </div>
+
+  );
 }
