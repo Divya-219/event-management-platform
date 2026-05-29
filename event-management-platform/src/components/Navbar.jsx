@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import logo from "../assets/logo.png"; 
+
 
 export default function Navbar() {
   return (
@@ -7,7 +7,7 @@ export default function Navbar() {
     <nav className="flex items-center justify-between px-8 py-4 shadow-md bg-white">
        <div className="flex items-center gap-3">
 
-        <img src={logo}alt="Event Logo"className="h-10 w-10"/>
+        <img src="/images/Logo.png"alt="Event Logo"className="h-10 w-10"/>
       <h1 className="text-2xl font-bold text-orange-500">
       Event Management Platform
       </h1>

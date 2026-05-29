@@ -1,4 +1,4 @@
-import heroImage from "../assets/image2.jpg";
+import heroImage from "/images/image2.jpg";
 
 export default function Hero({
   searchTerm,

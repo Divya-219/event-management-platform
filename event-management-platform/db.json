@@ -11,7 +11,7 @@
       "price": 99,
       "time": "09:00 AM",
       "organizerName": "Tech Events Inc",
-      "image":"src/assets/image1.jpg",
+      "image":"/images/image1.jpg",
       "description": "Join developers and tech leaders for a full day of React workshops, networking, and modern web development sessions."
     },
 
@@ -25,7 +25,7 @@
       "price": 50,
       "time": "02:00 PM",
       "organizerName": "Music Events Ltd",
-      "image": "src/assets/image2.jpg",
+      "image": "/images/image2.jpg",
       "description": "Experience live performances from top artists, exciting stage shows, food stalls, and an unforgettable musical atmosphere."
     },
 
@@ -39,7 +39,7 @@
       "price": 25,
       "time": "10:00 AM",
       "organizerName": "Art Enthusiasts Group",
-      "image": "src/assets/image3.jpg",
+      "image": "/images/image3.jpg",
       "description": "Explore creative artwork, modern paintings, sculptures, and interactive exhibits from talented artists around the world."
     },
 
@@ -53,7 +53,7 @@
       "price": 80,
       "time": "06:00 PM",
       "organizerName": "Tech Community Calgary",
-      "image": "src/assets/image4.jpg",
+      "image": "/images/image4.jpg",
       "description": "Meet developers, designers, and startup founders for inspiring tech talks, networking, and collaboration opportunities."
     },
 
@@ -67,7 +67,7 @@
       "price": 120,
       "time": "04:00 PM",
       "organizerName": "Sports Enthusiasts Group",
-      "image": "src/assets/image5.jpg",
+      "image": "/images/image5.jpg",
       "description": "Watch exciting matches, cheer for your favorite teams, and enjoy a thrilling sports competition experience."
     },
 
@@ -81,7 +81,7 @@
       "price": 150,
       "time": "04:00 PM",
       "organizerName": "Music Events Ltd",
-      "image": "src/assets/image6.jpg",
+      "image": "/images/image6.jpg",
       "description": "Experience live performances from top artists, exciting stage shows, food stalls, and an unforgettable musical atmosphere."
     }
     
