@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 export default function EventCard({ event }) {
   return (
 
@@ -24,7 +25,12 @@ export default function EventCard({ event }) {
         <p className="font-semibold mt-2 text-green-600">
           ${event.price}
         </p>
-
+            <Link
+            to={`/event/${event.id}`}
+            className="inline-block mt-4 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+          >
+            View Details
+          </Link>
       </div>
 
     </div>
