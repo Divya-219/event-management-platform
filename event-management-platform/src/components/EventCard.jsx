@@ -1,32 +1,35 @@
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { ThemeContext } from "../context/ThemeContext";
 export default function EventCard({ event }) {
+    const { darkMode } =
+    useContext(ThemeContext);
   return (
 
-    <div className="bg-white rounded-lg shadow-md overflow-hidden">
+    <div className={`rounded-lg shadow-md overflow-hidden ${ darkMode? "bg-gray-800 text-white"
+      : "bg-white text-black" }`}>
 
-      <img
-        src={event.image}
-        alt={event.title}
-        className="w-full h-52 object-cover"
-      />
+      <img src={event.image} alt={event.title}className="w-full h-52 object-cover" />
 
       <div className="p-4">
-
-       <h2 className="text-xl font-bold mb-1 text-gray-800">
+     <h2 className={`text-xl font-bold mb-1 ${darkMode ? "text-white" : "text-gray-800"}`}>
           {event.title}
         </h2>
 
-        <p className="text-sm text-orange-600 font-medium mb-1">{event.category}</p>
+        <p className={`text-sm ${darkMode ? "text-orange-400" : "text-orange-600"} font-medium mb-1`}>
+          {event.category}
+        </p>
 
-        <p  className="text-gray-600 text-sm mb-1">  {event.date} | {event.location}</p>
+        <p  className={`text-sm mb-1 ${darkMode? "text-gray-300": "text-gray-600"}`}>  {event.date} | {event.location}</p>
 
-        <p className="text-gray-600 text-sm mb-1">{event.time}</p>
+        <p className={`text-sm mb-1 ${darkMode ? "text-gray-300" : "text-gray-600"}`}>
+          {event.time}
+        </p>
 
         <p className="font-semibold mt-2 text-green-600">
           ${event.price}
         </p>
-            <Link
-            to={`/event/${event.id}`}
+            <Link to={`/event/${event.id}`}
             className="inline-block mt-4 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
           >
             View Details

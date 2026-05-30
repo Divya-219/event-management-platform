@@ -1,6 +1,9 @@
 import { useState } from "react";
+import { ThemeContext } from "../context/ThemeContext";
+import { useContext } from "react";
 
 export default function MyBookings() {
+  const { darkMode } = useContext(ThemeContext);
 
   const [bookings, setBookings] =
     useState(() => {
@@ -48,22 +51,21 @@ export default function MyBookings() {
 
             <div
               key={booking.id}
-              className="bg-white p-6 rounded-xl shadow-md"
-            >
+              className={`p-6 rounded-xl shadow-md ${darkMode ? "bg-gray-800" : "bg-white"}`} >
 
-              <h2 className="text-2xl font-bold mb-3">
+              <h2 className={`text-2xl font-bold mb-3 ${darkMode ? "text-white" : "text-gray-800"}`}>
                 {booking.attendee.name}
               </h2>
 
-              <p className="mb-2">
+              <p className={`mb-2 ${darkMode ? "text-gray-300" : "text-gray-600"}`}>
                 Email: {booking.attendee.email}
               </p>
 
-              <p className="mb-2">
+              <p className={`mb-2 ${darkMode ? "text-gray-300" : "text-gray-600"}`}>
                 Phone: {booking.attendee.phone}
               </p>
 
-              <p className="mb-4">
+              <p className={`mb-4 ${darkMode ? "text-gray-300" : "text-gray-600"}`}>
                 Tickets: {booking.quantity}
               </p>
 
@@ -71,8 +73,7 @@ export default function MyBookings() {
                 onClick={() =>
                   cancelBooking(booking.id)
                 }
-                className="bg-blue-500 text-white px-5 py-2 rounded-lg"
-              >
+                className={`px-5 py-2 rounded-lg ${darkMode ? "bg-blue-500 text-white" : "bg-blue-500 text-white"}`} >
                 Cancel Booking
               </button>
 

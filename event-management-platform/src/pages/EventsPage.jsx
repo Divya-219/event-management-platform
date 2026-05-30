@@ -1,12 +1,15 @@
-import { useEffect, useState } from "react";
+import {useContext, useEffect, useState } from "react";
 import EventCard from "../components/EventCard";
 import Hero from "../components/Hero";
+import { ThemeContext } from "../context/ThemeContext";
+
 
 
 
 export default function EventsPage() {
   const [events, setEvents] = useState([]);
    const [searchTerm, setSearchTerm] = useState("");
+     const { darkMode } = useContext(ThemeContext);
 
   useEffect(() => {
     fetch("http://localhost:3000/events")
@@ -19,12 +22,22 @@ export default function EventsPage() {
   );
 
   return (
-    <div className="p-8 bg-gray-50 min-h-screen">
+    <div
+  className={`p-8 min-h-screen ${
+    darkMode
+      ? "bg-gray-900 text-white"
+      : "bg-gray-50 text-gray-900"
+  }`}
+>
        <Hero
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
       />
-  <h1 className="text-4xl font-bold mb-8 text-center text-gray-800">
+  <h1
+  className={`text-4xl font-bold mb-8 text-center ${
+    darkMode ? "text-white" : "text-gray-800"
+  }`}
+>
         Upcoming Events
       </h1>
 

@@ -1,10 +1,17 @@
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { ThemeContext } from "../context/ThemeContext";
 
 
-export default function Navbar() {
+export default function Navbar() 
+
+{
+  const { darkMode, toggleTheme } =
+  useContext(ThemeContext);
   return (
 
-    <nav className="flex items-center justify-between px-8 py-4 shadow-md bg-white">
+    <nav className={`flex items-center justify-between px-8 py-4 shadow-md 
+      ${darkMode ? "bg-gray-900 text-white": "bg-white text-black" }`}>
        <div className="flex items-center gap-3">
 
         <img src="/images/Logo.png"alt="Event Logo"className="h-10 w-10"/>
@@ -21,7 +28,12 @@ export default function Navbar() {
         <Link to="/my-bookings" className="hover:text-orange-600 transition">
           My Bookings
         </Link>
+  <button onClick={toggleTheme}
+  className="bg-blue-600 text-white px-4 py-2 rounded-lg">
 
+  {darkMode ? "☀️ Light" : "🌙 Dark"}
+
+</button>
       </div>
 
     </nav>

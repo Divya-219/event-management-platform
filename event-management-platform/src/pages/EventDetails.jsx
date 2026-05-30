@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { useContext,useEffect, useState } from "react";
 
 import { useParams, Link } from "react-router-dom";
+import { ThemeContext } from "../context/ThemeContext";
 
 export default function EventDetails() {
-
+ const { darkMode } = useContext(ThemeContext);
   const { id } = useParams();
 
   const [event, setEvent] = useState(null);
@@ -30,9 +31,7 @@ export default function EventDetails() {
 
     <div className="p-8 max-w-5xl mx-auto">
 
-     <img
-        src={event.image}
-        alt={event.title}
+     <img src={event.image} alt={event.title}
         className="w-full h-[500px] object-cover rounded-2xl mb-8"
       />
 
@@ -45,11 +44,12 @@ export default function EventDetails() {
         {event.title}
       </h1>
 
-      <p className="text-gray-600 text-lg mb-4">
+      <p className={`text-lg mb-4 ${darkMode ? "text-gray-300" : "text-gray-600"}`}>
         Location: {event.location}
       </p>
 
-      <p className="text-gray-600 text-lg mb-6">
+      <p className={` text-lg mb-6  
+      ${darkMode ? "text-gray-300": "text-gray-600" }`}>
         Date: {event.date} | Time: {event.time}
       </p>
 

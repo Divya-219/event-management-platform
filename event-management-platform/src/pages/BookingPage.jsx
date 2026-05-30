@@ -1,5 +1,9 @@
 import { useReducer } from "react";
 import { useNavigate } from "react-router-dom";
+import { ThemeContext } from "../context/ThemeContext";
+import {useContext } from "react";
+
+
 import {
   bookingReducer,
   initialState
@@ -12,6 +16,7 @@ export default function Booking() {
     initialState
   );
   const navigate = useNavigate();
+  const { darkMode } = useContext(ThemeContext);
 
   return (
 
@@ -24,8 +29,8 @@ export default function Booking() {
 
       {state.step === 1 && (
 
-<div className="bg-white p-6 rounded-xl shadow-md">
- <h2 className="text-2xl font-bold mb-4">
+<div className={`p-6 rounded-xl shadow-md ${darkMode ? "bg-gray-800" : "bg-white"}`}>
+ <h2 className={`text-2xl font-bold mb-4 ${darkMode ? "text-white" : "text-gray-800"}`}>
             Select Tickets
           </h2>
  <input type="number"min="1"
@@ -54,14 +59,16 @@ export default function Booking() {
 
       {state.step === 2 && (
 
-        <div className="bg-white p-6 rounded-xl shadow-md">
-     <h2 className="text-2xl font-bold mb-4">
+        <div className={`p-6 rounded-xl shadow-md ${darkMode ? "bg-gray-800" : "bg-white"}`}>
+     <h2 className={`text-2xl font-bold mb-4 ${darkMode ? "text-white" : "text-gray-800"}`}>
             Attendee Details
           </h2>
 
           <div className="space-y-4">
 
             <input type="text" placeholder="Name"
+              
+              
               value={state.attendee.name}
               onChange={(e) =>
                 dispatch({
@@ -74,9 +81,9 @@ export default function Booking() {
               className="border p-3 rounded-lg w-full"
             />
 
-            <input
-              type="email" placeholder="Email"
+            <input type="email" placeholder="Email"
               value={state.attendee.email}
+              
               onChange={(e) =>
                 dispatch({
                   type: "SET_ATTENDEE",
@@ -90,6 +97,7 @@ export default function Booking() {
 
             <input type="text" placeholder="Phone"
               value={state.attendee.phone}
+              
               onChange={(e) =>
                 dispatch({
                   type: "SET_ATTENDEE",
@@ -157,9 +165,8 @@ export default function Booking() {
 
       {state.step === 3 && (
 
-        <div className="bg-white p-6 rounded-xl shadow-md">
-
-          <h2 className="text-3xl font-bold mb-6">
+        <div className={`p-6 rounded-xl shadow-md ${darkMode ? "bg-gray-800" : "bg-white"}`}>
+          <h2 className={`text-3xl font-bold mb-6 ${darkMode ? "text-white" : "text-gray-800"}`}>
             Booking Confirmed..
           </h2>
 
