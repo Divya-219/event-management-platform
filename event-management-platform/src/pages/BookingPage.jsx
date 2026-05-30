@@ -1,5 +1,5 @@
 import { useReducer } from "react";
-
+import { useNavigate } from "react-router-dom";
 import {
   bookingReducer,
   initialState
@@ -11,6 +11,7 @@ export default function Booking() {
     bookingReducer,
     initialState
   );
+  const navigate = useNavigate();
 
   return (
 
@@ -113,14 +114,39 @@ export default function Booking() {
               Back
             </button>
 
-            <button
-              onClick={() =>
-                dispatch({ type: "NEXT_STEP" })
-              }
-              className="bg-blue-600 text-white px-6 py-3 rounded-lg"
-            >
-              Continue
-            </button>
+           
+<button
+  onClick={() => {
+
+    const existingBookings =
+      JSON.parse(localStorage.getItem("bookings")) || [];
+
+    const newBooking = {
+      id: Date.now(),
+
+      quantity: state.quantity,
+
+      attendee: state.attendee,
+
+      bookingDate: new Date().toISOString()
+    };
+
+    localStorage.setItem(
+      "bookings",
+      JSON.stringify([
+        ...existingBookings,
+        newBooking
+      ])
+    );
+
+    dispatch({ type: "NEXT_STEP" });
+
+  }}
+  className="bg-blue-600 text-white px-6 py-3 rounded-lg"
+>
+  Confirm Booking
+</button>
+
 
           </div>
 
@@ -149,10 +175,10 @@ export default function Booking() {
             Email: {state.attendee.email}
           </p>
 
-          <p className="mb-6">
+          <p className="flex gap-8 mb-6">
             Phone: {state.attendee.phone}
           </p>
-
+<div className="flex gap-6 mt-6">
           <button
             onClick={() =>
               dispatch({ type: "PREVIOUS_STEP" })
@@ -161,9 +187,14 @@ export default function Booking() {
           >
             Back
           </button>
-
+            <button
+            onClick={() => navigate("/my-bookings") }
+            className="  bg-blue-500 px-6 py-3 rounded-lg"
+          >
+            My Bookings
+          </button>
         </div>
-
+</div>
       )}
 
     </div>
