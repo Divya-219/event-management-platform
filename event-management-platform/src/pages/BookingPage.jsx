@@ -1,8 +1,8 @@
-import { useReducer } from "react";
+import { useReducer, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ThemeContext } from "../context/ThemeContext";
-import {useContext } from "react";
-
+import { useContext } from "react";
+import { useLocation } from "react-router-dom";
 
 import {
   bookingReducer,
@@ -15,46 +15,139 @@ export default function Booking() {
     bookingReducer,
     initialState
   );
+  const [bookingRef, setBookingRef] = useState("");
+const location = useLocation();
+const event = location.state?.event;
+
+  const ticketTypes = [
+  { id: 1, name: "General", price: 50 },
+  { id: 2, name: "VIP", price: 120 },
+  { id: 3, name: "Premium", price: 200 }
+];
+  const [errors, setErrors] = useState({});
+
+  function validateForm() {
+    const newErrors = {};
+
+    if (!state.attendee.name.trim()) {
+      newErrors.name = "Name is required";
+    }
+
+    if (!state.attendee.email.trim()) {
+      newErrors.email = "Email is required";
+    } else if (
+      !/^\S+@\S+\.\S+$/.test(
+        state.attendee.email
+      )
+    ) {
+      newErrors.email =
+        "Invalid email address";
+    }
+
+    if (!state.attendee.phone.trim()) {
+  newErrors.phone = "Phone is required";
+} else if (!/^\d{10}$/.test(state.attendee.phone)) {
+  newErrors.phone = "Phone must be exactly 10 digits";
+}
+
+    setErrors(newErrors);
+
+    return (
+      Object.keys(newErrors).length === 0
+    );
+  }
+
   const navigate = useNavigate();
-  const { darkMode } = useContext(ThemeContext);
+  const { darkMode } =
+    useContext(ThemeContext);
 
   return (
-
     <div className="p-8 max-w-3xl mx-auto">
-
       <h1 className="text-4xl font-bold mb-8">
         Ticket Booking
       </h1>
- {/* STEP 1 */}
+      <p className="mb-6 text-lg font-semibold text-gray-600">
+    Step {state.step} of 3
+  </p>
+{/* STEP 1 */}
 
-      {state.step === 1 && (
+{state.step === 1 && (
+  <div className={`p-6 rounded-xl shadow-md ${darkMode ? "bg-gray-800" : "bg-white"}`}>
 
-<div className={`p-6 rounded-xl shadow-md ${darkMode ? "bg-gray-800" : "bg-white"}`}>
- <h2 className={`text-2xl font-bold mb-4 ${darkMode ? "text-white" : "text-gray-800"}`}>
-            Select Tickets
-          </h2>
- <input type="number"min="1"
-            value={state.quantity}
-            onChange={(e) =>
-              dispatch({
-                type: "SET_QUANTITY",
-                payload: Number(e.target.value)
-              })
-            }
-            className="border p-3 rounded-lg w-full mb-6"
-          />
+    <h2 className={`text-2xl font-bold mb-4 ${darkMode ? "text-white" : "text-gray-800"}`}>
+      Select Tickets
+    </h2>
 
-          <button onClick={() =>
-              dispatch({ type: "NEXT_STEP" })
-            }
-            className="bg-blue-600 text-white px-6 py-3 rounded-lg"
-          >
-            Continue
-          </button>
+ {/* Event Info (READ ONLY) */}
+    <div className="mb-4">
+      <p className="font-semibold text-lg">
+        {event?.title}
+      </p>
 
-        </div>
+      <p className="text-sm text-gray-500">
+        Date: {event?.date} | {event?.time}
+      </p>
+    </div>
 
-      )}
+{/* Ticket Type */}
+    <select
+      value={state.ticketType.id}
+      onChange={(e) => {
+        const selected = ticketTypes.find(
+          (t) => t.id === Number(e.target.value)
+        );
+
+        dispatch({
+          type: "SET_TICKET_TYPE",
+          payload: selected
+        });
+      }}
+      className="border p-3 rounded-lg w-full mb-4"
+    >
+      {ticketTypes.map((t) => (
+        <option key={t.id} value={t.id}>
+          {t.name} - ${t.price}
+        </option>
+      ))}
+    </select>
+
+{/* Quantity */}
+    <input
+      type="number"
+      min="1"
+      value={state.quantity}
+      onChange={(e) =>
+        dispatch({
+          type: "SET_QUANTITY",
+          payload: Number(e.target.value)
+        })
+      }
+      className="border p-3 rounded-lg w-full mb-4"
+    />
+
+ {/* Total */}
+    <div className="mb-4 text-lg font-semibold">
+      Total Price: ${state.quantity * state.ticketType.price}
+    </div>
+
+    <button
+      onClick={() => {
+        if (state.quantity < 1) {
+          alert("Please select at least 1 ticket");
+          return;
+        }
+        dispatch({ type: "NEXT_STEP" });
+      }}
+      className="bg-blue-600 text-white px-6 py-3 rounded-lg"
+    >
+      Continue
+    </button>
+
+  </div>
+)}
+
+
+
  {/* STEP 2 */}
 
       {state.step === 2 && (
@@ -66,48 +159,95 @@ export default function Booking() {
 
           <div className="space-y-4">
 
-            <input type="text" placeholder="Name"
-              
-              
-              value={state.attendee.name}
-              onChange={(e) =>
-                dispatch({
-                  type: "SET_ATTENDEE",
-                  payload: {
-                    name: e.target.value
-                  }
-                })
-              }
-              className="border p-3 rounded-lg w-full"
-            />
+<input
+  type="text"
+  placeholder="Name"
+  value={state.attendee.name}
+  
+  onChange={(e) => {
+  dispatch({
+    type: "SET_ATTENDEE",
+    payload: { name: e.target.value }
+  });
 
-            <input type="email" placeholder="Email"
-              value={state.attendee.email}
-              
-              onChange={(e) =>
-                dispatch({
-                  type: "SET_ATTENDEE",
-                  payload: {
-                    email: e.target.value
-                  }
-                })
-              }
-              className="border p-3 rounded-lg w-full"
-            />
+  setErrors((prev) => ({
+    ...prev,
+    name: ""
+  }));
+}}
+  
+  className="border p-3 rounded-lg w-full"
+/>
 
-            <input type="text" placeholder="Phone"
-              value={state.attendee.phone}
-              
-              onChange={(e) =>
-                dispatch({
-                  type: "SET_ATTENDEE",
-                  payload: {
-                    phone: e.target.value
-                  }
-                })
-              }
-              className="border p-3 rounded-lg w-full"
-            />
+{errors.name && (
+  <p className="text-red-500 text-sm">
+    {errors.name}
+  </p>
+)}
+
+
+
+
+
+ 
+
+<input
+  type="email"
+  placeholder="Email"
+  value={state.attendee.email}
+  
+  onChange={(e) => {
+  dispatch({
+    type: "SET_ATTENDEE",
+    payload: { email: e.target.value }
+  });
+
+  setErrors((prev) => ({
+    ...prev,
+    email: ""
+  }));
+}}
+  
+  className="border p-3 rounded-lg w-full"
+/>
+
+{errors.email && (
+  <p className="text-red-500 text-sm">
+    {errors.email}
+  </p>
+)}
+
+
+<input
+  type="tel"
+  placeholder="Phone"
+  value={state.attendee.phone}
+  onChange={(e) => {
+    dispatch({
+      type: "SET_ATTENDEE",
+      payload: {
+        phone: e.target.value
+      }
+    });
+
+    setErrors((prev) => ({
+      ...prev,
+      phone: ""
+    }));
+  }}
+  className="border p-3 rounded-lg w-full"
+/>
+
+{errors.phone && (
+  <p className="text-red-500 text-sm">
+    {errors.phone}
+  </p>
+)}
+
+
+
+
+
 
           </div>
 
@@ -124,36 +264,43 @@ export default function Booking() {
 
            
 <button
+
   onClick={() => {
+  if (!validateForm()) return;
 
-    const existingBookings =
-      JSON.parse(localStorage.getItem("bookings")) || [];
+  const existingBookings =
+    JSON.parse(localStorage.getItem("bookings")) || [];
 
-    const newBooking = {
-      id: Date.now(),
+  const ref = "BK-" + Date.now();
 
-      quantity: state.quantity,
+  const newBooking = {
+    id: Date.now(),
+    reference: ref,
+    quantity: state.quantity,
+    ticketType: state.ticketType,
+    totalAmount: state.quantity * state.ticketType.price,
+    attendee: state.attendee,
+    eventId: event.id,
+    eventTitle: event.title,
+    eventDate: event.date,
+    status: "confirmed",
+    bookingDate: new Date().toISOString()
+  };
 
-      attendee: state.attendee,
+  setBookingRef(ref); //
 
-      bookingDate: new Date().toISOString()
-    };
+  localStorage.setItem(
+    "bookings",
+    JSON.stringify([...existingBookings, newBooking])
+  );
 
-    localStorage.setItem(
-      "bookings",
-      JSON.stringify([
-        ...existingBookings,
-        newBooking
-      ])
-    );
-
-    dispatch({ type: "NEXT_STEP" });
-
-  }}
+  dispatch({ type: "NEXT_STEP" });
+}}
   className="bg-blue-600 text-white px-6 py-3 rounded-lg"
 >
   Confirm Booking
 </button>
+
 
 
           </div>
@@ -170,6 +317,9 @@ export default function Booking() {
             Booking Confirmed..
           </h2>
 
+        <p className="mb-3 font-bold">
+  Booking Reference: {bookingRef}
+</p>
           <p className="mb-3">
             Tickets: {state.quantity}
           </p>

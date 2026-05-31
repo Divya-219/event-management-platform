@@ -62,7 +62,7 @@ export default function EventDetails() {
       </p>
 
       <Link
-        to={`/booking/${event.id}`}
+        to={`/booking/${event.id}`} state={{ event }}
         className="bg-blue-600 text-white px-6 py-3 rounded-xl hover:bg-blue-700"
       >
         Book Tickets
