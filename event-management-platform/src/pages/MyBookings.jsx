@@ -2,21 +2,17 @@ import { useState, useContext } from "react";
 import { ThemeContext } from "../context/ThemeContext";
 
 export default function MyBookings() {
-  const { darkMode } = useContext(ThemeContext);
-
-  const [bookings, setBookings] = useState(() => {
-    return JSON.parse(localStorage.getItem("bookings") || "[]");
+const { darkMode } = useContext(ThemeContext);
+const [bookings, setBookings] = useState(() => {
+return JSON.parse(localStorage.getItem("bookings") || "[]");
   });
+const [filter, setFilter] = useState("all");
 
-  const [filter, setFilter] = useState("all");
-
-  function cancelBooking(id) {
-    const confirmCancel = window.confirm(
-      "Are you sure you want to cancel this booking?"
-    );
+  function cancelBooking(id)
+  {
+    const confirmCancel = window.confirm("Are you sure you want to cancel this booking?");
 
     if (!confirmCancel) return;
-
     const updated = bookings.map((b) =>
       b.id === id ? { ...b, status: "cancelled" } : b
     );
@@ -26,7 +22,7 @@ export default function MyBookings() {
   }
 
 const filteredBookings = bookings
-  .filter((b) => b.status !== "cancelled") // ignore cancelled bookings
+  .filter((b) => b.status !== "cancelled") 
   .filter((b) => {
     const eventDate = new Date(b.eventDate);
     const today = new Date();
@@ -48,20 +44,17 @@ const filteredBookings = bookings
       <div className="mb-6 flex gap-4">
         <button
           onClick={() => setFilter("all")}
-          className="px-4 py-2 bg-gray-300 rounded"
-        >
+          className="px-4 py-2 bg-gray-300 rounded" >
           All
         </button>
         <button
           onClick={() => setFilter("upcoming")}
-          className="px-4 py-2 bg-green-500 text-white rounded"
-        >
+          className="px-4 py-2 bg-green-500 text-white rounded">
           Upcoming
         </button>
         <button
           onClick={() => setFilter("past")}
-          className="px-4 py-2 bg-red-500 text-white rounded"
-        >
+          className="px-4 py-2 bg-red-500 text-white rounded">
           Past
         </button>
       </div>
@@ -73,10 +66,7 @@ const filteredBookings = bookings
           {filteredBookings.map((b) => (
             <div
               key={b.id}
-              className={`p-6 rounded-xl shadow-md ${
-                darkMode ? "bg-gray-800 text-white" : "bg-white"
-              }`}
-            >
+              className={`p-6 rounded-xl shadow-md ${darkMode ? "bg-gray-800 text-white" : "bg-white" }`}>
               <h2 className="text-2xl font-bold mb-2">
                 {b.eventTitle}
               </h2>
@@ -96,8 +86,7 @@ const filteredBookings = bookings
                 <span
                   className={
                     b.status === "cancelled" ? "text-red-500" : "text-green-500"
-                  }
-                >
+                  } >
                   {b.status}
                 </span>
               </p>
@@ -108,9 +97,7 @@ const filteredBookings = bookings
                 className={`px-4 py-2 rounded-lg ${
                   b.status === "cancelled"
                     ? "bg-gray-400 cursor-not-allowed"
-                    : "bg-red-500 text-white"
-                }`}
-              >
+                    : "bg-red-500 text-white" }`}>
                 {b.status === "cancelled" ? "Cancelled" : "Cancel Booking"}
               </button>
             </div>
