@@ -1,31 +1,25 @@
 export const initialState = {
-
   step: 1,
-
   quantity: 1,
-  ticketType: { id: 1, name: "General", price: 50 },
+  ticketType: null,   // IMPORTANT FIX
   attendee: {
     name: "",
     email: "",
     phone: ""
   }
-
 };
-
-
 export function bookingReducer(state, action) {
   switch (action.type) {
+    case "SET_TICKET_TYPE":
+      return {
+        ...state,
+        ticketType: action.payload
+      };
 
     case "SET_QUANTITY":
       return {
         ...state,
         quantity: action.payload
-      };
-
-    case "SET_TICKET_TYPE":
-      return {
-        ...state,
-        ticketType: action.payload
       };
 
     case "SET_ATTENDEE":
@@ -48,6 +42,9 @@ export function bookingReducer(state, action) {
         ...state,
         step: state.step - 1
       };
+
+    case "RESET":
+      return initialState;
 
     default:
       return state;

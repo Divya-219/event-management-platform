@@ -1,8 +1,9 @@
-import { useReducer, useState } from "react";
+import { useReducer, useState, useEffect, useContext } from "react";
 import { useNavigate,useLocation} from "react-router-dom";
 import { ThemeContext } from "../context/ThemeContext";
-import { useContext } from "react";
 import {bookingReducer,initialState} from "../reducers/bookingReducer";
+
+
 
 export default function Booking() {
 const [state, dispatch] = useReducer(bookingReducer, initialState);
@@ -12,13 +13,26 @@ const location = useLocation();
 const navigate = useNavigate();
 const { darkMode } =useContext(ThemeContext);
 const event = location.state?.event;
-const ticketTypes = [
-  { id: 1, name: "General", price: 50 },
-  { id: 2, name: "VIP", price: 120 },
-  { id: 3, name: "Premium", price: 200 }
-];
+const ticketTypes = event?.ticketTypes || [];
+useEffect(() => {
+  if (event?.ticketTypes?.length) {
+    dispatch({
+      type: "SET_TICKET_TYPE",
+      payload: event.ticketTypes[0]
+    });
+  }
+}, [event]);
 
 
+if (!event) {
+  return (
+    <div className="p-8">
+      <h2 className="text-2xl font-bold">
+        Event not found
+      </h2>
+    </div>
+  );
+}
 
  function validateForm() {
   const newErrors = {};
@@ -59,7 +73,7 @@ const ticketTypes = [
       Select Tickets
   </h2>
 
- {/* Event Info (READ ONLY) */}
+ {/* Event Info */}
     <div className="mb-4">
       <p className="font-semibold text-lg">
         {event?.title}
@@ -72,17 +86,19 @@ const ticketTypes = [
 
 {/* Ticket Type */}
     <select
-      value={state.ticketType.id}
-      onChange={(e) => {
-      const selected = ticketTypes.find(
-      (t) => t.id === Number(e.target.value)
-        );
+      value={state.ticketType?.id || ""}
+     onChange={(e) => {
+  const selected = ticketTypes.find(
+    (t) => t.id === Number(e.target.value)
+  );
 
-        dispatch({
-          type: "SET_TICKET_TYPE",
-          payload: selected
-        });
-      }}
+  if (!selected) return;
+
+  dispatch({
+    type: "SET_TICKET_TYPE",
+    payload: selected
+  });
+}}
       className="border p-3 rounded-lg w-full mb-4">
       {ticketTypes.map((t) => (
         <option key={t.id} value={t.id}>
@@ -105,7 +121,8 @@ const ticketTypes = [
 
  {/* Total */}
     <div className="mb-4 text-lg font-semibold">
-      Total Price: ${state.quantity * state.ticketType.price}
+     Total Price: $
+    {state.quantity * (state.ticketType?.price || 0)}
     </div>
     <button
       onClick={() => {
@@ -143,7 +160,7 @@ const ticketTypes = [
   }));
 }}
   
-  className="border p-3 rounded-lg w-full"/>
+className="border p-3 rounded-lg w-full"/>
 
 {errors.name && (
   <p className="text-red-500 text-sm">
@@ -202,8 +219,7 @@ className="border p-3 rounded-lg w-full"/>
        className="bg-gray-300 px-6 py-3 rounded-lg" >
         Back
     </button>
-
-      <button onClick={() => {
+<button onClick={() => {
       if (!validateForm()) return;
       const existingBookings =JSON.parse(localStorage.getItem("bookings")) || [];
        const ref = "BK-" + Date.now();
@@ -212,7 +228,7 @@ className="border p-3 rounded-lg w-full"/>
         reference: ref,
          quantity: state.quantity,
         ticketType: state.ticketType,
-        totalAmount: state.quantity * state.ticketType.price,
+        totalAmount: state.quantity * (state.ticketType?.price || 0),
         attendee: state.attendee,
         eventId: event.id,
         eventTitle: event.title,
@@ -232,6 +248,7 @@ className="border p-3 rounded-lg w-full"/>
   className="bg-blue-600 text-white px-6 py-3 rounded-lg">
   Confirm Booking
   </button>
+      
   </div>
   </div>
     )}
@@ -272,7 +289,10 @@ className="border p-3 rounded-lg w-full"/>
             Back
           </button>
             <button
-            onClick={() => navigate("/my-bookings") }
+            onClick={() => {
+  dispatch({ type: "RESET" });
+  navigate("/my-bookings");
+}}
             className="  bg-blue-500 px-6 py-3 rounded-lg"
           >
             My Bookings

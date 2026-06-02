@@ -1,6 +1,14 @@
 import heroImage from "/images/image2.jpg";
+import { useEffect, useRef } from "react";
+
 
 export default function Hero({searchTerm,setSearchTerm,}) {
+
+  const searchRef = useRef(null);
+
+    useEffect(() => {
+    searchRef.current.focus();
+    }, []);
 return (
 
 <section className="bg-[#1b1919] text-white rounded-3xl overflow-hidden mb-12 shadow-2xl">
@@ -22,13 +30,11 @@ return (
 {/*sreach bar*/}
           <div className="flex bg-white rounded-2xl overflow-hidden shadow-lg mb-8">
 
-            <input type="text"placeholder="Search events by title..."
-              value={searchTerm}
-              onChange={(e) =>
-              setSearchTerm(e.target.value)
-              }
-              className="w-full px-6 py-4 text-gray-700 outline-none"
-            />
+            <input ref={searchRef}type="text"placeholder="Search events by title..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-full px-6 py-4 text-gray-700 outline-none"/>
+           
           <button className="bg-orange-500 hover:bg-orange-600 transition px-8 font-semibold">
            Search
             </button>
