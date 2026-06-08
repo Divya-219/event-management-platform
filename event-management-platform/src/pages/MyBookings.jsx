@@ -1,29 +1,43 @@
-import { useState, useContext } from "react";
+import { useEffect, useState, useContext } from "react";
 import { ThemeContext } from "../context/ThemeContext";
 
 export default function MyBookings() {
-const { darkMode } = useContext(ThemeContext);
-const [bookings, setBookings] = useState(() => {
-return JSON.parse(localStorage.getItem("bookings") || "[]");
-  });
-const [filter, setFilter] = useState("all");
+  const { darkMode } = useContext(ThemeContext);
+  const [bookings, setBookings] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [filter, setFilter] = useState("all");
 
+  useEffect(() => {
+  fetch("http://localhost:3000/bookings?userId=user1")
+      .then((res) => res.json())
+      .then((data) => {
+        setBookings(data);
+        setLoading(false);
+      })
+      .catch(() => setLoading(false));
+  }, []);
   function cancelBooking(id)
   {
     const confirmCancel = window.confirm("Are you sure you want to cancel this booking?");
 
     if (!confirmCancel) return;
-    const updated = bookings.map((b) =>
-      b.id === id ? { ...b, status: "cancelled" } : b
-    );
-
-    setBookings(updated);
-    localStorage.setItem("bookings", JSON.stringify(updated));
+  fetch(`http://localhost:3000/bookings/${id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ status: "cancelled" }),
+    })
+      .then(() => {
+        setBookings((prev) =>
+          prev.map((b) =>
+            b.id === id ? { ...b, status: "cancelled" } : b
+          )
+        );
+      });
   }
 
-const filteredBookings = bookings
-  .filter((b) => b.status !== "cancelled") 
-  .filter((b) => {
+  const filteredBookings = bookings.filter((b) => {
     const eventDate = new Date(b.eventDate);
     const today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -36,11 +50,15 @@ const filteredBookings = bookings
     return true;
   });
 
-  return (
-    <div className="p-8 max-w-5xl mx-auto">
-      <h1 className="text-4xl font-bold mb-6">My Bookings</h1>
+  if (loading) {
+    return <p className="p-8">Loading bookings...</p>;
+  }
 
-      {/* FILTER */}
+  return (
+    <div className="p-8 max-w-6xl mx-auto">
+      <h1 className="text-4xl font-bold mb-8">My Bookings</h1>
+
+      
       <div className="mb-6 flex gap-4">
         <button
           onClick={() => setFilter("all")}
