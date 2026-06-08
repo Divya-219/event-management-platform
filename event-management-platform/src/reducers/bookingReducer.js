@@ -1,7 +1,7 @@
 export const initialState = {
   step: 1,
   quantity: 1,
-  ticketType: null,   // IMPORTANT FIX
+  ticketType: null,   
   attendee: {
     name: "",
     email: "",
